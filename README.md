@@ -1,7 +1,7 @@
-TestSupport_DataBroker_PlugIn
-=============================
+Test_DataBroker_Support
+=======================
 
-TestSupport DataBroker PlugIn
+Test DataBroker Support
 
 License
 =======
