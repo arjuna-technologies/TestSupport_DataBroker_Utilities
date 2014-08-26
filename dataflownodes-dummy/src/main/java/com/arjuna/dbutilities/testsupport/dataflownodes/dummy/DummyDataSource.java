@@ -28,9 +28,9 @@ public class DummyDataSource implements DataSource
         _name       = name;
         _properties = properties;
 
-        _dataProvider = new BasicDataProvider<String>(this);
+        _dataProvider = new BasicDataProvider<Object>(this);
         
-        _receivedData = new LinkedList<String>();
+        _receivedData = new LinkedList<Object>();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class DummyDataSource implements DataSource
 
         Set<Class<?>> dataProviderDataClasses = new HashSet<Class<?>>();
 
-        dataProviderDataClasses.add(String.class);
+        dataProviderDataClasses.add(Object.class);
 
         return dataProviderDataClasses;
     }
@@ -67,13 +67,13 @@ public class DummyDataSource implements DataSource
     {
         logger.log(Level.FINE, "DummyDataSource.getDataProvider");
 
-        if (dataClass == String.class)
+        if (dataClass == Object.class)
             return (DataProvider<T>) _dataProvider;
         else
             return null;
     }
 
-    public void sendData(String data)
+    public void sendData(Object data)
     {
         logger.log(Level.FINE, "DummyDataSource.sendData");
 
@@ -82,7 +82,7 @@ public class DummyDataSource implements DataSource
         _dataProvider.produce(data);
     }
 
-    public List<String> receivedData()
+    public List<Object> receivedData()
     {
         logger.log(Level.FINE, "DummyDataSource.receivedData");
 
@@ -91,7 +91,7 @@ public class DummyDataSource implements DataSource
 
     private String               _name;
     private Map<String, String>  _properties;
-    private DataProvider<String> _dataProvider;
+    private DataProvider<Object> _dataProvider;
 
-    private List<String> _receivedData;
+    private List<Object> _receivedData;
 }

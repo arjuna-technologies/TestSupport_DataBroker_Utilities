@@ -30,10 +30,10 @@ public class DummyDataService implements DataService
         _name       = name;
         _properties = properties;
 
-        _dataConsumer = new BasicDataConsumer<String>(this, "sendData", String.class);
-        _dataProvider = new BasicDataProvider<String>(this);
+        _dataConsumer = new BasicDataConsumer<Object>(this, "sendData", Object.class);
+        _dataProvider = new BasicDataProvider<Object>(this);
         
-        _receivedData = new LinkedList<String>();
+        _receivedData = new LinkedList<Object>();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class DummyDataService implements DataService
 
         Set<Class<?>> dataConsumerDataClasses = new HashSet<Class<?>>();
 
-        dataConsumerDataClasses.add(String.class);
+        dataConsumerDataClasses.add(Object.class);
 
         return dataConsumerDataClasses;
     }
@@ -70,7 +70,7 @@ public class DummyDataService implements DataService
     {
         logger.log(Level.FINE, "DummyDataService.getDataConsumer");
 
-        if (dataClass == String.class)
+        if (Object.class.isAssignableFrom(dataClass))
             return (DataConsumer<T>) _dataConsumer;
         else
             return null;
@@ -83,7 +83,7 @@ public class DummyDataService implements DataService
 
         Set<Class<?>> dataProviderDataClasses = new HashSet<Class<?>>();
 
-        dataProviderDataClasses.add(String.class);
+        dataProviderDataClasses.add(Object.class);
 
         return dataProviderDataClasses;
     }
@@ -94,13 +94,13 @@ public class DummyDataService implements DataService
     {
         logger.log(Level.FINE, "DummyDataService.getDataProvider");
 
-        if (dataClass == String.class)
+        if (dataClass == Object.class)
             return (DataProvider<T>) _dataProvider;
         else
             return null;
     }
 
-    public void sendData(String data)
+    public void sendData(Object data)
     {
         logger.log(Level.FINE, "DummyDataSource.sendData");
 
@@ -109,7 +109,7 @@ public class DummyDataService implements DataService
         _dataProvider.produce(data);
     }
 
-    public List<String> receivedData()
+    public List<Object> receivedData()
     {
         logger.log(Level.FINE, "DummyDataSource.receivedData");
 
@@ -118,8 +118,8 @@ public class DummyDataService implements DataService
 
     private String               _name;
     private Map<String, String>  _properties;
-    private DataConsumer<String> _dataConsumer;
-    private DataProvider<String> _dataProvider;
+    private DataConsumer<Object> _dataConsumer;
+    private DataProvider<Object> _dataProvider;
 
-    private List<String> _receivedData;
+    private List<Object> _receivedData;
 }
