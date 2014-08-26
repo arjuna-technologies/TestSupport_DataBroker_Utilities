@@ -8,8 +8,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.arjuna.dbsupport.test</groupId>
-        <artifactId>test-support-parent</artifactId>
+        <groupId>com.arjuna.dbutilities.testsupport</groupId>
+        <artifactId>testsupport-utilities-parent</artifactId>
         <version>1.0.0p1m1</version>
     </parent>
 

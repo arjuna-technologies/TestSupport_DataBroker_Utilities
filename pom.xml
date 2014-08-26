@@ -7,13 +7,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.arjuna.dbsupport.test</groupId>
-    <artifactId>test-support-parent</artifactId>
+    <groupId>com.arjuna.dbutilities.testsupport</groupId>
+    <artifactId>testsupport-utilities-parent</artifactId>
     <version>1.0.0p1m1</version>
 
     <packaging>pom</packaging>
 
-    <name>Test DataBroker Support Parent</name>
+    <name>TestSupport DataBroker Utilities Parent</name>
 
     <properties>
         <version.com.arjuna.databroker>1.0.0p1m1</version.com.arjuna.databroker>
