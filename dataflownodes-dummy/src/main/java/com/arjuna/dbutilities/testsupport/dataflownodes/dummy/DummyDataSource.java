@@ -13,9 +13,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.risbic.intraconnect.basic.BasicDataProvider;
+import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataProvider;
 import com.arjuna.databroker.data.DataSource;
+import com.arjuna.databroker.data.jee.DefaultObservableDataProvider;
 
 public class DummyDataSource implements DataSource
 {
@@ -28,9 +29,25 @@ public class DummyDataSource implements DataSource
         _name       = name;
         _properties = properties;
 
-        _dataProvider = new BasicDataProvider<Object>(this);
+        _dataProvider = new DefaultObservableDataProvider<Object>(this);
         
         _receivedData = new LinkedList<Object>();
+    }
+
+    @Override
+    public DataFlow getDataFlow()
+    {
+        logger.log(Level.FINE, "DummyDataSource.getDataFlow");
+
+        return _dataFlow;
+    }
+
+    @Override
+    public void setDataFlow(DataFlow dataFlow)
+    {
+        logger.log(Level.FINE, "DummyDataSource.setDataFlow");
+
+        _dataFlow = dataFlow;
     }
 
     @Override
@@ -42,11 +59,27 @@ public class DummyDataSource implements DataSource
     }
 
     @Override
+    public void setName(String name)
+    {
+        logger.log(Level.FINE, "DummyDataSource.setName");
+
+        _name = name;
+    }
+
+    @Override
     public Map<String, String> getProperties()
     {
         logger.log(Level.FINE, "DummyDataSource.getProperties");
 
         return Collections.unmodifiableMap(_properties);
+    }
+
+    @Override
+    public void setProperties(Map<String, String> properties)
+    {
+        logger.log(Level.FINE, "DummyDataSource.setProperties");
+
+        _properties = properties;
     }
 
     @Override
@@ -89,6 +122,7 @@ public class DummyDataSource implements DataSource
         return _receivedData;
     }
 
+    private DataFlow             _dataFlow;
     private String               _name;
     private Map<String, String>  _properties;
     private DataProvider<Object> _dataProvider;

@@ -13,11 +13,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.risbic.intraconnect.basic.BasicDataConsumer;
-import org.risbic.intraconnect.basic.BasicDataProvider;
+
 import com.arjuna.databroker.data.DataConsumer;
+import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataProvider;
 import com.arjuna.databroker.data.DataService;
+import com.arjuna.databroker.data.jee.DefaultObservableDataProvider;
+import com.arjuna.databroker.data.jee.DefaultObserverDataConsumer;
 
 public class DummyDataService implements DataService
 {
@@ -30,10 +32,26 @@ public class DummyDataService implements DataService
         _name       = name;
         _properties = properties;
 
-        _dataConsumer = new BasicDataConsumer<Object>(this, "sendData", Object.class);
-        _dataProvider = new BasicDataProvider<Object>(this);
+        _dataConsumer = new DefaultObserverDataConsumer<Object>(this, "sendData", Object.class);
+        _dataProvider = new DefaultObservableDataProvider<Object>(this);
         
         _receivedData = new LinkedList<Object>();
+    }
+
+    @Override
+    public DataFlow getDataFlow()
+    {
+        logger.log(Level.FINE, "DummyDataService.getDataFlow");
+
+        return _dataFlow;
+    }
+
+    @Override
+    public void setDataFlow(DataFlow dataFlow)
+    {
+        logger.log(Level.FINE, "DummyDataService.setDataFlow");
+
+        _dataFlow = dataFlow;
     }
 
     @Override
@@ -45,11 +63,27 @@ public class DummyDataService implements DataService
     }
 
     @Override
+    public void setName(String name)
+    {
+        logger.log(Level.FINE, "DummyDataService.setName");
+
+        _name = name;
+    }
+
+    @Override
     public Map<String, String> getProperties()
     {
         logger.log(Level.FINE, "DummyDataService.getProperties");
 
         return Collections.unmodifiableMap(_properties);
+    }
+
+    @Override
+    public void setProperties(Map<String, String> properties)
+    {
+        logger.log(Level.FINE, "DummyDataService.setProperties");
+
+        _properties = properties;
     }
 
     @Override
@@ -116,6 +150,7 @@ public class DummyDataService implements DataService
         return _receivedData;
     }
 
+    private DataFlow             _dataFlow;
     private String               _name;
     private Map<String, String>  _properties;
     private DataConsumer<Object> _dataConsumer;

@@ -16,7 +16,7 @@
     <name>TestSupport DataBroker Utilities Parent</name>
 
     <properties>
-        <version.com.arjuna.databroker>1.0.0p1m1</version.com.arjuna.databroker>
+        <version.com.arjuna.databroker>1.0.0p1m2l</version.com.arjuna.databroker>
 
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
