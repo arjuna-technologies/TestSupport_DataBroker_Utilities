@@ -127,7 +127,7 @@ public class DummyDataProcessor implements DataProcessor
     {
         logger.log(Level.FINE, "DummyDataProcessor.getDataProvider");
 
-        if (dataClass == Object.class)
+        if (Object.class.isAssignableFrom(dataClass))
             return (DataProvider<T>) _dataProvider;
         else
             return null;

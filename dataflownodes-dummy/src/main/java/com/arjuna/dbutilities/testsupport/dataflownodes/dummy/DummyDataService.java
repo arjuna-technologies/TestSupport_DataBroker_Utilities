@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataProvider;
@@ -128,7 +127,7 @@ public class DummyDataService implements DataService
     {
         logger.log(Level.FINE, "DummyDataService.getDataProvider");
 
-        if (dataClass == Object.class)
+        if (Object.class.isAssignableFrom(dataClass))
             return (DataProvider<T>) _dataProvider;
         else
             return null;

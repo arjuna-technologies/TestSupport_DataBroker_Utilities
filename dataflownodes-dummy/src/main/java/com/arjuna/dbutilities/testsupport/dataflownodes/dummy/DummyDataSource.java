@@ -100,7 +100,7 @@ public class DummyDataSource implements DataSource
     {
         logger.log(Level.FINE, "DummyDataSource.getDataProvider");
 
-        if (dataClass == Object.class)
+        if (Object.class.isAssignableFrom(dataClass))
             return (DataProvider<T>) _dataProvider;
         else
             return null;
