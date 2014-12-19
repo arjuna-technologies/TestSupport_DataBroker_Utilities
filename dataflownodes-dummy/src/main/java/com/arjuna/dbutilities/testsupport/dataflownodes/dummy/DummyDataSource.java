@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataProvider;
 import com.arjuna.databroker.data.DataSource;
-import com.arjuna.databroker.data.jee.DefaultObservableDataProvider;
+import com.arjuna.databroker.data.core.jee.DefaultObservableDataProvider;
 
 public class DummyDataSource implements DataSource
 {
