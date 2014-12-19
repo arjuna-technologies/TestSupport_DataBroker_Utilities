@@ -17,8 +17,8 @@ import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataProvider;
 import com.arjuna.databroker.data.DataService;
-import com.arjuna.databroker.data.jee.DefaultObservableDataProvider;
-import com.arjuna.databroker.data.jee.DefaultObserverDataConsumer;
+import com.arjuna.databroker.data.core.jee.DefaultObservableDataProvider;
+import com.arjuna.databroker.data.core.jee.DefaultObserverDataConsumer;
 
 public class DummyDataService implements DataService
 {

@@ -13,13 +13,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataProvider;
 import com.arjuna.databroker.data.DataSink;
-import com.arjuna.databroker.data.jee.DefaultObservableDataProvider;
-import com.arjuna.databroker.data.jee.DefaultObserverDataConsumer;
+import com.arjuna.databroker.data.core.jee.DefaultObservableDataProvider;
+import com.arjuna.databroker.data.core.jee.DefaultObserverDataConsumer;
 
 public class DummyDataSink implements DataSink
 {
