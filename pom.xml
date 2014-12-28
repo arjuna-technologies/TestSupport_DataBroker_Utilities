@@ -26,6 +26,7 @@
 
     <modules>
         <module>dataflownodes-dummy</module> 
+        <module>dataflownodes-lifecycle</module> 
     </modules>
 
     <build>
