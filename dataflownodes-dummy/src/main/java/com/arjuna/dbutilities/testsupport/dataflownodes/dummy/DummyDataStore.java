@@ -33,7 +33,7 @@ public class DummyDataStore implements DataStore
 
         _dataConsumer = new DefaultObserverDataConsumer<Object>(this, "sendData", Object.class);
         _dataProvider = new DefaultObservableDataProvider<Object>(this);
-        
+
         _receivedData = new LinkedList<Object>();
     }
 

@@ -30,7 +30,7 @@ public class DummyDataSource implements DataSource
         _properties = properties;
 
         _dataProvider = new DefaultObservableDataProvider<Object>(this);
-        
+
         _receivedData = new LinkedList<Object>();
     }
 
