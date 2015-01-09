@@ -99,7 +99,16 @@ public class TestJEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycl
         }
     }
 
-    public Boolean processCreatedDataFlowNode(String dataFlowNodeId, DataFlowNode dataFlowNode, DataFlow dataFlow)
+    public Boolean completeCreationDataFlowNode(String dataFlowNodeId, DataFlowNode dataFlowNode)
+    {
+        injectDataConnectors(dataFlowNodeId, dataFlowNode);
+
+        invokeLifeCycleOperation(dataFlowNode, PostCreated.class);
+
+        return Boolean.TRUE;
+    }
+
+    public Boolean completeCreationAndActivateDataFlowNode(String dataFlowNodeId, DataFlowNode dataFlowNode, DataFlow dataFlow)
     {
         injectDataConnectors(dataFlowNodeId, dataFlowNode);
 
@@ -109,6 +118,14 @@ public class TestJEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycl
         if (dataFlow != null)
             dataFlow.getDataFlowNodeInventory().addDataFlowNode(dataFlowNode);
 
+        invokeLifeCycleOperation(dataFlowNode, PostActivated.class);
+
+        return Boolean.TRUE;
+    }
+
+    public Boolean activateDataFlowNode(DataFlowNode dataFlowNode)
+    {
+        invokeLifeCycleOperation(dataFlowNode, PreActivated.class);
         invokeLifeCycleOperation(dataFlowNode, PostActivated.class);
 
         return Boolean.TRUE;
