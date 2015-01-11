@@ -22,6 +22,11 @@ public class DummyDataSource implements DataSource
 {
     private static final Logger logger = Logger.getLogger(DummyDataSource.class.getName());
 
+    public DummyDataSource()
+    {
+        logger.log(Level.FINE, "DummyDataSource");
+    }
+
     public DummyDataSource(String name, Map<String, String> properties)
     {
         logger.log(Level.FINE, "DummyDataSource: " + name + ", " + properties);

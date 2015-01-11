@@ -24,6 +24,11 @@ public class DummyDataProcessor implements DataProcessor
 {
     private static final Logger logger = Logger.getLogger(DummyDataProcessor.class.getName());
 
+    public DummyDataProcessor()
+    {
+        logger.log(Level.FINE, "DummyDataProcessor");
+    }
+
     public DummyDataProcessor(String name, Map<String, String> properties)
     {
         logger.log(Level.FINE, "DummyDataProcessor: " + name + ", " + properties);

@@ -24,6 +24,11 @@ public class DummyDataService implements DataService
 {
     private static final Logger logger = Logger.getLogger(DummyDataService.class.getName());
 
+    public DummyDataService()
+    {
+        logger.log(Level.FINE, "DummyDataService");
+    }
+
     public DummyDataService(String name, Map<String, String> properties)
     {
         logger.log(Level.FINE, "DummyDataService: " + name + ", " + properties);

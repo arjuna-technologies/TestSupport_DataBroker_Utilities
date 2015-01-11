@@ -24,6 +24,11 @@ public class DummyDataSink implements DataSink
 {
     private static final Logger logger = Logger.getLogger(DummyDataSink.class.getName());
 
+    public DummyDataSink()
+    {
+        logger.log(Level.FINE, "DummyDataSink");
+    }
+
     public DummyDataSink(String name, Map<String, String> properties)
     {
         logger.log(Level.FINE, "DummyDataSink: " + name + ", " + properties);

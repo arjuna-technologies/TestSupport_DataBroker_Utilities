@@ -24,6 +24,11 @@ public class DummyDataStore implements DataStore
 {
     private static final Logger logger = Logger.getLogger(DummyDataStore.class.getName());
 
+    public DummyDataStore()
+    {
+        logger.log(Level.FINE, "DummyDataStore");
+    }
+
     public DummyDataStore(String name, Map<String, String> properties)
     {
         logger.log(Level.FINE, "DummyDataStore: " + name + ", " + properties);
