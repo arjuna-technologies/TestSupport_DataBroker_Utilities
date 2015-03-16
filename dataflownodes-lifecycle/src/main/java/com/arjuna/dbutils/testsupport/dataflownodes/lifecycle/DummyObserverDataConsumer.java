@@ -2,7 +2,7 @@
  * Copyright (c) 2014-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
-package com.arjuna.dbutilities.testsupport.dataflownodes.lifecycle;
+package com.arjuna.dbutils.testsupport.dataflownodes.lifecycle;
 
 import java.lang.reflect.Method;
 import java.util.logging.Level;

@@ -2,7 +2,7 @@
  * Copyright (c) 2014-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
-package com.arjuna.dbutilities.testsupport.dataflownodes.dummy;
+package com.arjuna.dbutils.testsupport.dataflownodes.dummy;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -13,30 +13,27 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataProvider;
-import com.arjuna.databroker.data.DataProcessor;
+import com.arjuna.databroker.data.DataSource;
 import com.arjuna.databroker.data.core.jee.DefaultObservableDataProvider;
-import com.arjuna.databroker.data.core.jee.DefaultObserverDataConsumer;
 
-public class DummyDataProcessor implements DataProcessor
+public class DummyDataSource implements DataSource
 {
-    private static final Logger logger = Logger.getLogger(DummyDataProcessor.class.getName());
+    private static final Logger logger = Logger.getLogger(DummyDataSource.class.getName());
 
-    public DummyDataProcessor()
+    public DummyDataSource()
     {
-        logger.log(Level.FINE, "DummyDataProcessor");
+        logger.log(Level.FINE, "DummyDataSource");
     }
 
-    public DummyDataProcessor(String name, Map<String, String> properties)
+    public DummyDataSource(String name, Map<String, String> properties)
     {
-        logger.log(Level.FINE, "DummyDataProcessor: " + name + ", " + properties);
+        logger.log(Level.FINE, "DummyDataSource: " + name + ", " + properties);
 
         _name       = name;
         _properties = properties;
 
-        _dataConsumer = new DefaultObserverDataConsumer<Object>(this, "sendData", Object.class);
         _dataProvider = new DefaultObservableDataProvider<Object>(this);
 
         _receivedData = new LinkedList<Object>();
@@ -45,7 +42,7 @@ public class DummyDataProcessor implements DataProcessor
     @Override
     public DataFlow getDataFlow()
     {
-        logger.log(Level.FINE, "DummyDataProcessor.getDataFlow");
+        logger.log(Level.FINE, "DummyDataSource.getDataFlow");
 
         return _dataFlow;
     }
@@ -53,7 +50,7 @@ public class DummyDataProcessor implements DataProcessor
     @Override
     public void setDataFlow(DataFlow dataFlow)
     {
-        logger.log(Level.FINE, "DummyDataProcessor.setDataFlow");
+        logger.log(Level.FINE, "DummyDataSource.setDataFlow");
 
         _dataFlow = dataFlow;
     }
@@ -61,7 +58,7 @@ public class DummyDataProcessor implements DataProcessor
     @Override
     public String getName()
     {
-        logger.log(Level.FINE, "DummyDataProcessor.getName");
+        logger.log(Level.FINE, "DummyDataSource.getName");
 
         return _name;
     }
@@ -69,7 +66,7 @@ public class DummyDataProcessor implements DataProcessor
     @Override
     public void setName(String name)
     {
-        logger.log(Level.FINE, "DummyDataProcessor.setName");
+        logger.log(Level.FINE, "DummyDataSource.setName");
 
         _name = name;
     }
@@ -77,7 +74,7 @@ public class DummyDataProcessor implements DataProcessor
     @Override
     public Map<String, String> getProperties()
     {
-        logger.log(Level.FINE, "DummyDataProcessor.getProperties");
+        logger.log(Level.FINE, "DummyDataSource.getProperties");
 
         return Collections.unmodifiableMap(_properties);
     }
@@ -85,39 +82,15 @@ public class DummyDataProcessor implements DataProcessor
     @Override
     public void setProperties(Map<String, String> properties)
     {
-        logger.log(Level.FINE, "DummyDataProcessor.setProperties");
+        logger.log(Level.FINE, "DummyDataSource.setProperties");
 
         _properties = properties;
     }
 
     @Override
-    public Collection<Class<?>> getDataConsumerDataClasses()
-    {
-        logger.log(Level.FINE, "DummyDataProcessor.getDataConsumerDataClasses");
-
-        Set<Class<?>> dataConsumerDataClasses = new HashSet<Class<?>>();
-
-        dataConsumerDataClasses.add(Object.class);
-
-        return dataConsumerDataClasses;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> DataConsumer<T> getDataConsumer(Class<T> dataClass)
-    {
-        logger.log(Level.FINE, "DummyDataProcessor.getDataConsumer");
-
-        if (Object.class.isAssignableFrom(dataClass))
-            return (DataConsumer<T>) _dataConsumer;
-        else
-            return null;
-    }
-
-    @Override
     public Collection<Class<?>> getDataProviderDataClasses()
     {
-        logger.log(Level.FINE, "DummyDataProcessor.getDataProviderDataClasses");
+        logger.log(Level.FINE, "DummyDataSource.getDataProviderDataClasses");
 
         Set<Class<?>> dataProviderDataClasses = new HashSet<Class<?>>();
 
@@ -130,7 +103,7 @@ public class DummyDataProcessor implements DataProcessor
     @SuppressWarnings("unchecked")
     public <T> DataProvider<T> getDataProvider(Class<T> dataClass)
     {
-        logger.log(Level.FINE, "DummyDataProcessor.getDataProvider");
+        logger.log(Level.FINE, "DummyDataSource.getDataProvider");
 
         if (Object.class.isAssignableFrom(dataClass))
             return (DataProvider<T>) _dataProvider;
@@ -140,7 +113,7 @@ public class DummyDataProcessor implements DataProcessor
 
     public void sendData(Object data)
     {
-        logger.log(Level.FINE, "DummyDataProcessor.sendData");
+        logger.log(Level.FINE, "DummyDataSource.sendData");
 
         _receivedData.add(data);
 
@@ -149,7 +122,7 @@ public class DummyDataProcessor implements DataProcessor
 
     public List<Object> receivedData()
     {
-        logger.log(Level.FINE, "DummyDataProcessor.receivedData");
+        logger.log(Level.FINE, "DummyDataSource.receivedData");
 
         return _receivedData;
     }
@@ -157,7 +130,6 @@ public class DummyDataProcessor implements DataProcessor
     private DataFlow             _dataFlow;
     private String               _name;
     private Map<String, String>  _properties;
-    private DataConsumer<Object> _dataConsumer;
     private DataProvider<Object> _dataProvider;
 
     private List<Object> _receivedData;

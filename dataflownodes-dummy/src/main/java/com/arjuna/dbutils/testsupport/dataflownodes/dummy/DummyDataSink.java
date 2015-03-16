@@ -2,7 +2,7 @@
  * Copyright (c) 2014-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
-package com.arjuna.dbutilities.testsupport.dataflownodes.dummy;
+package com.arjuna.dbutils.testsupport.dataflownodes.dummy;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -16,22 +16,22 @@ import java.util.logging.Logger;
 import com.arjuna.databroker.data.DataConsumer;
 import com.arjuna.databroker.data.DataFlow;
 import com.arjuna.databroker.data.DataProvider;
-import com.arjuna.databroker.data.DataService;
+import com.arjuna.databroker.data.DataSink;
 import com.arjuna.databroker.data.core.jee.DefaultObservableDataProvider;
 import com.arjuna.databroker.data.core.jee.DefaultObserverDataConsumer;
 
-public class DummyDataService implements DataService
+public class DummyDataSink implements DataSink
 {
-    private static final Logger logger = Logger.getLogger(DummyDataService.class.getName());
+    private static final Logger logger = Logger.getLogger(DummyDataSink.class.getName());
 
-    public DummyDataService()
+    public DummyDataSink()
     {
-        logger.log(Level.FINE, "DummyDataService");
+        logger.log(Level.FINE, "DummyDataSink");
     }
 
-    public DummyDataService(String name, Map<String, String> properties)
+    public DummyDataSink(String name, Map<String, String> properties)
     {
-        logger.log(Level.FINE, "DummyDataService: " + name + ", " + properties);
+        logger.log(Level.FINE, "DummyDataSink: " + name + ", " + properties);
 
         _name       = name;
         _properties = properties;
@@ -45,7 +45,7 @@ public class DummyDataService implements DataService
     @Override
     public DataFlow getDataFlow()
     {
-        logger.log(Level.FINE, "DummyDataService.getDataFlow");
+        logger.log(Level.FINE, "DummyDataSink.getDataFlow");
 
         return _dataFlow;
     }
@@ -53,7 +53,7 @@ public class DummyDataService implements DataService
     @Override
     public void setDataFlow(DataFlow dataFlow)
     {
-        logger.log(Level.FINE, "DummyDataService.setDataFlow");
+        logger.log(Level.FINE, "DummyDataSink.setDataFlow");
 
         _dataFlow = dataFlow;
     }
@@ -61,7 +61,7 @@ public class DummyDataService implements DataService
     @Override
     public String getName()
     {
-        logger.log(Level.FINE, "DummyDataService.getName");
+        logger.log(Level.FINE, "DummyDataSink.getName");
 
         return _name;
     }
@@ -69,7 +69,7 @@ public class DummyDataService implements DataService
     @Override
     public void setName(String name)
     {
-        logger.log(Level.FINE, "DummyDataService.setName");
+        logger.log(Level.FINE, "DummyDataSink.setName");
 
         _name = name;
     }
@@ -77,7 +77,7 @@ public class DummyDataService implements DataService
     @Override
     public Map<String, String> getProperties()
     {
-        logger.log(Level.FINE, "DummyDataService.getProperties");
+        logger.log(Level.FINE, "DummyDataSink.getProperties");
 
         return Collections.unmodifiableMap(_properties);
     }
@@ -85,7 +85,7 @@ public class DummyDataService implements DataService
     @Override
     public void setProperties(Map<String, String> properties)
     {
-        logger.log(Level.FINE, "DummyDataService.setProperties");
+        logger.log(Level.FINE, "DummyDataSink.setProperties");
 
         _properties = properties;
     }
@@ -93,7 +93,7 @@ public class DummyDataService implements DataService
     @Override
     public Collection<Class<?>> getDataConsumerDataClasses()
     {
-        logger.log(Level.FINE, "DummyDataService.getDataConsumerDataClasses");
+        logger.log(Level.FINE, "DummyDataSink.getDataConsumerDataClasses");
 
         Set<Class<?>> dataConsumerDataClasses = new HashSet<Class<?>>();
 
@@ -106,7 +106,7 @@ public class DummyDataService implements DataService
     @SuppressWarnings("unchecked")
     public <T> DataConsumer<T> getDataConsumer(Class<T> dataClass)
     {
-        logger.log(Level.FINE, "DummyDataService.getDataConsumer");
+        logger.log(Level.FINE, "DummyDataSink.getDataConsumer");
 
         if (Object.class.isAssignableFrom(dataClass))
             return (DataConsumer<T>) _dataConsumer;
@@ -114,33 +114,9 @@ public class DummyDataService implements DataService
             return null;
     }
 
-    @Override
-    public Collection<Class<?>> getDataProviderDataClasses()
-    {
-        logger.log(Level.FINE, "DummyDataService.getDataProviderDataClasses");
-
-        Set<Class<?>> dataProviderDataClasses = new HashSet<Class<?>>();
-
-        dataProviderDataClasses.add(Object.class);
-
-        return dataProviderDataClasses;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> DataProvider<T> getDataProvider(Class<T> dataClass)
-    {
-        logger.log(Level.FINE, "DummyDataService.getDataProvider");
-
-        if (Object.class.isAssignableFrom(dataClass))
-            return (DataProvider<T>) _dataProvider;
-        else
-            return null;
-    }
-
     public void sendData(Object data)
     {
-        logger.log(Level.FINE, "DummyDataSource.sendData");
+        logger.log(Level.FINE, "DummyDataSink.sendData");
 
         _receivedData.add(data);
 
@@ -149,9 +125,9 @@ public class DummyDataService implements DataService
 
     public List<Object> receivedData()
     {
-        logger.log(Level.FINE, "DummyDataSource.receivedData");
+        logger.log(Level.FINE, "DummyDataSink.receivedData");
 
-        return _receivedData;
+    	return _receivedData;
     }
 
     private DataFlow             _dataFlow;
