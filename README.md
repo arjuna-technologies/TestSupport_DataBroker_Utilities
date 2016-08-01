@@ -6,7 +6,7 @@ TestSupport DataBroker Utilities
 License
 =======
 
-Copyright (c) 2014-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England.
+Copyright (c) 2014-2016, Arjuna Technologies Limited, Newcastle-upon-Tyne, England.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

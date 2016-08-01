@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
+ * Copyright (c) 2014-2016, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
 package com.arjuna.dbutils.testsupport.dataflownodes.lifecycle;
@@ -33,6 +33,7 @@ import com.arjuna.databroker.data.jee.DataFlowNodeState;
 import com.arjuna.databroker.data.jee.annotation.DataConsumerInjection;
 import com.arjuna.databroker.data.jee.annotation.DataFlowNodeStateInjection;
 import com.arjuna.databroker.data.jee.annotation.DataProviderInjection;
+import com.arjuna.databroker.data.jee.annotation.LoggerInjection;
 import com.arjuna.databroker.data.jee.annotation.PostActivated;
 import com.arjuna.databroker.data.jee.annotation.PostConfig;
 import com.arjuna.databroker.data.jee.annotation.PostCreated;
@@ -58,6 +59,7 @@ public class TestJEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycl
             String dataFlowNodeId = UUID.randomUUID().toString();
             T      dataFlowNode   = dataFlowNodeFactory.createDataFlowNode(name, dataFlowNodeClass, metaProperties, properties);
 
+            injectLoggers(dataFlowNode, dataFlow);
             injectDataConnectors(dataFlowNodeId, dataFlowNode);
 
             invokeLifeCycleOperation(dataFlowNode, PostCreated.class);
@@ -99,8 +101,9 @@ public class TestJEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycl
         }
     }
 
-    public Boolean completeCreationDataFlowNode(String dataFlowNodeId, DataFlowNode dataFlowNode)
+    public Boolean completeCreationDataFlowNode(String dataFlowNodeId, DataFlowNode dataFlowNode, DataFlow dataFlow)
     {
+        injectLoggers(dataFlowNode, dataFlow);
         injectDataConnectors(dataFlowNodeId, dataFlowNode);
 
         invokeLifeCycleOperation(dataFlowNode, PostCreated.class);
@@ -110,6 +113,7 @@ public class TestJEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycl
 
     public Boolean completeCreationAndActivateDataFlowNode(String dataFlowNodeId, DataFlowNode dataFlowNode, DataFlow dataFlow)
     {
+        injectLoggers(dataFlowNode, dataFlow);
         injectDataConnectors(dataFlowNodeId, dataFlowNode);
 
         invokeLifeCycleOperation(dataFlowNode, PostCreated.class);
@@ -209,6 +213,43 @@ public class TestJEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycl
             }
 
             dataFlowNodeClass = dataFlowNodeClass.getSuperclass();
+        }
+    }
+
+    private void injectLoggers(DataFlowNode dataFlowNode, DataFlow dataFlow)
+    {
+        Class<?> dataFlowNodeClass = dataFlowNode.getClass();
+
+        logger.log(Level.FINE, "injectLoggers dataFlow = \"" + dataFlow.getName() + "\", dataFlowNode = \"" + dataFlowNode.getName() + "\", class = \"" + dataFlowNodeClass + "\"");
+
+        while (dataFlowNodeClass != null)
+        {
+            for (Field field: dataFlowNodeClass.getDeclaredFields())
+            {
+                if (field.isAnnotationPresent(LoggerInjection.class))
+                {
+                    try
+                    {
+                        logger.log(Level.FINE, "LoggerInjection \"" + field.getName() + "\", \"" + field.getType() + "\"");
+                        LoggerInjection loggerInjection = field.getAnnotation(LoggerInjection.class);
+                        boolean accessable = field.isAccessible();
+                        field.setAccessible(true);
+                        if (field.getType().isAssignableFrom(Logger.class))
+                            field.set(dataFlowNode, Logger.getLogger("Test:" + loggerInjection.name()));
+                        else
+                            logger.log(Level.WARNING, "Logger injection failed, unsupported type: " + field.getType());
+                        field.setAccessible(accessable);
+                    }
+                    catch (IllegalAccessException illegalAccessException)
+                    {
+                        logger.log(Level.WARNING, "Logger injection failed of \"" + field.getName() + "\": " + illegalAccessException);
+                    }
+                    catch (Throwable throwable)
+                    {
+                        logger.log(Level.WARNING, "Logger injection failed of \"" + field.getName(), throwable);
+                    }
+                }
+            }
         }
     }
 

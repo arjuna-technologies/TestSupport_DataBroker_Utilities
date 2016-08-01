@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
+ * Copyright (c) 2014-2016, Arjuna Technologies Limited, Newcastle-upon-Tyne, England. All rights reserved.
  */
 
 package com.arjuna.dbutils.testsupport.dataflownodes.dummy;
@@ -127,7 +127,7 @@ public class DummyDataSink implements DataSink
     {
         logger.log(Level.FINE, "DummyDataSink.receivedData");
 
-    	return _receivedData;
+        return _receivedData;
     }
 
     private DataFlow             _dataFlow;
