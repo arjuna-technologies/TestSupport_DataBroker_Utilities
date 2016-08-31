@@ -220,7 +220,7 @@ public class TestJEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycl
     {
         Class<?> dataFlowNodeClass = dataFlowNode.getClass();
 
-        logger.log(Level.FINE, "injectLoggers dataFlow = \"" + dataFlow.getName() + "\", dataFlowNode = \"" + dataFlowNode.getName() + "\", class = \"" + dataFlowNodeClass + "\"");
+        logger.log(Level.FINE, "injectLoggers dataFlowNode = \"" + dataFlowNode.getName() + "\", class = \"" + dataFlowNodeClass + "\"");
 
         while (dataFlowNodeClass != null)
         {
@@ -235,7 +235,7 @@ public class TestJEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycl
                         boolean accessable = field.isAccessible();
                         field.setAccessible(true);
                         if (field.getType().isAssignableFrom(Logger.class))
-                            field.set(dataFlowNode, Logger.getLogger("Test:" + loggerInjection.name()));
+                            field.set(dataFlowNode, Logger.getLogger("injection.logger.test." + loggerInjection.type()));
                         else
                             logger.log(Level.WARNING, "Logger injection failed, unsupported type: " + field.getType());
                         field.setAccessible(accessable);
@@ -250,6 +250,8 @@ public class TestJEEDataFlowNodeLifeCycleControl implements DataFlowNodeLifeCycl
                     }
                 }
             }
+
+            dataFlowNodeClass = dataFlowNodeClass.getSuperclass();
         }
     }
 
